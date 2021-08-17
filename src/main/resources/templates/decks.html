@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Decks:</h1>
+    <table>
+        <thead>
+            <th> Title </th>
+            <th> Author </th>
+            <th> Cards </th>
+        </thead>
+        <tbody>
+            <tr th:each="deck : ${decks}">
+                <td><span th:text="${deck.title}"> Title </span></td>
+                <td><span th:text="${deck.author}"> Author </span></td>
+                <td><span th:text="${deck.cards}"> Cards </span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
