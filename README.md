@@ -1,1 +1,2 @@
-# a spring boot deckstats clone where users can upload decks and view decks others have made
+# deckstats_clone
+a spring boot project where users can upload decks and view decks others have made
