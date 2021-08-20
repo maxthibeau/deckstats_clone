@@ -50,4 +50,9 @@ public class MainController {
         model.addAttribute("decks", deckRepository.findAll());
         return "decks";
     }
+
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
 }
