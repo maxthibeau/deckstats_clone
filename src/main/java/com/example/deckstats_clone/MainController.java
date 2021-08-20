@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
+
 @Controller
 public class MainController {
     @Autowired
     private DeckRepository deckRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String index(){
@@ -27,8 +32,8 @@ public class MainController {
 
     @PostMapping("/create")
     public @ResponseBody
-    RedirectView addNewDeck (@RequestParam String title
-            , @RequestParam String author,
+    RedirectView addNewDeck (@RequestParam String title,
+                             @RequestParam String author,
                              @RequestParam String cards
                              )
     {
@@ -54,5 +59,37 @@ public class MainController {
     @GetMapping("/register")
     public String register(){
         return "register";
+    }
+
+    @PostMapping("/register")
+    public @ResponseBody RedirectView submitRegistration(
+            @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String psw
+            ) {
+        User u = new User();
+        u.setName(username);
+        u.setEmail(email);
+        u.setPassword(psw);
+        userRepository.save(u);
+
+        return new RedirectView("/");
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public @ResponseBody String attempt_login(@RequestParam String username,
+                                @RequestParam String psw){
+        Iterable<User> allUsers = userRepository.findAll();
+        for (User user: allUsers){
+            if (user.getName().equals(username) && user.getPassword().equals(psw)){
+                return "successful login";
+            }
+        }
+        return "attempt login";
     }
 }
